@@ -1,7 +1,8 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
+import { Link } from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,17 +26,24 @@ const styles = StyleSheet.create({
   }
 });
 
-const AppBarTab = ({title}) => {
-  return(<Pressable style={styles.appBarTab} onPress={()=>console.log(`pressed the ${title} button`)}>
-    <Text style={styles.topBar}>{title}</Text>
-  </Pressable>);
+const AppBarTab = ({title, link}) => {
+
+  return (
+    <View style={styles.appBarTab}>
+      <Link to={link}>
+        <Text style={styles.topBar}>{title}</Text>
+      </Link>
+    </View>
+  );
 }
 
 const AppBar = () => {
   return (
   <View style={styles.container}>
-    <AppBarTab title="Repositories" />
-    <AppBarTab title="Test" />
+    <ScrollView horizontal>
+      <AppBarTab title="Repositories" link="repositories"/>
+      <AppBarTab title="Sign In" link="signin" />
+    </ScrollView>
   </View>);
 };
 
