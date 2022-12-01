@@ -43,6 +43,7 @@ const AppBar = () => {
     <ScrollView horizontal>
       <AppBarTab title="Repositories" link="repositories"/>
       <AppBarTab title="Sign In" link="signin" />
+      <AppBarTab title="BMI" link="bmi" />
     </ScrollView>
   </View>);
 };
