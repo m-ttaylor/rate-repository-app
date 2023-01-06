@@ -4,6 +4,7 @@ import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
+import SingleRepository from './SingleRepository';
 // import BodyMassIndexCalculator from './BmiForm';
 
 const styles = StyleSheet.create({
@@ -35,8 +36,8 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} exact />
         <Route path="signin" element={<SignIn />} exact />
-        {/* <Route path="bmi" element={<BodyMassIndexCalculator onSubmit={onSubmit} />} exact /> */}
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path=":id" element={<SingleRepository />} />
       </Routes>
     </View>
   );

@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.appBarBackground,
 
     flexDirection: 'row'
-    // backgroundColor: "black",
-  // ...
   },
   topBar: {
     color: theme.colors.title,
@@ -64,12 +62,11 @@ const AppBar = () => {
   return (
   <View style={styles.container}>
     <ScrollView horizontal>
-      <AppBarTab title="Repositories" link="repositories"/>
+      <AppBarTab title="Repositories" link="/"/>
         {signedIn ?
           <AppBarTab title="Sign Out" link="/" onPress={signOut} /> :
           <AppBarTab title="Sign In" link="signin" /> 
         }
-      <AppBarTab title="BMI" link="bmi" />
     </ScrollView>
   </View>);
 };

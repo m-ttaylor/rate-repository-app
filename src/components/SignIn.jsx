@@ -72,10 +72,6 @@ const initialValues = {
   password: '',
 };
 
-// const onSubmit = (values) => {
-//   console.log(values);
-// };
-
 const validationSchema = yup.object().shape({
   username: yup
     .string()
@@ -100,6 +96,18 @@ const SignInForm = ({ onSubmit }) => {
     </View>
   );
 }
+export const SignInContainer = ({onSubmit}) => {
+  return (
+    <Formik 
+    initialValues={initialValues} 
+    validationSchema={validationSchema}
+    onSubmit={onSubmit}
+  >
+    {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+  </Formik>
+  );
+}
+
 const SignIn = () => {
 
   const [signIn] = useSignIn();
@@ -119,13 +127,14 @@ const SignIn = () => {
   };
 
   return (
-  <Formik 
-    initialValues={initialValues} 
-    validationSchema={validationSchema}
-    onSubmit={onSubmit}
-  >
-    {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-  </Formik>
+    <SignInContainer onSubmit={onSubmit} />
+  // <Formik 
+  //   initialValues={initialValues} 
+  //   validationSchema={validationSchema}
+  //   onSubmit={onSubmit}
+  // >
+  //   {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+  // </Formik>
   );
 };
 
