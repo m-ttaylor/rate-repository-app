@@ -67,6 +67,7 @@ const AppBar = () => {
           <AppBarTab title="Sign Out" link="/" onPress={signOut} /> :
           <AppBarTab title="Sign In" link="signin" /> 
         }
+      <AppBarTab title="Create Review" link="createreview" />
     </ScrollView>
   </View>);
 };
