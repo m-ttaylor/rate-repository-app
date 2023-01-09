@@ -64,10 +64,16 @@ const AppBar = () => {
     <ScrollView horizontal>
       <AppBarTab title="Repositories" link="/"/>
         {signedIn ?
-          <AppBarTab title="Sign Out" link="/" onPress={signOut} /> :
-          <AppBarTab title="Sign In" link="signin" /> 
+          <>
+            <AppBarTab title="Sign Out" link="/" onPress={signOut} />
+            <AppBarTab title="Create Review" link="createreview" />
+          </> :
+          <>
+            <AppBarTab title="Sign In" link="signin" /> 
+            <AppBarTab title="Sign Up" link="signup" />
+          </>
         }
-      <AppBarTab title="Create Review" link="createreview" />
+      
     </ScrollView>
   </View>);
 };

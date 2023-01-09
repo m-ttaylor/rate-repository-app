@@ -6,11 +6,11 @@ import { Formik } from 'formik';
 import theme from "../theme";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-native";
+import useCreateUser from '../hooks/useCreateUser';
 
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "grey",
     padding: 4,
     marginVertical: 4,
     marginHorizontal: 4,
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 const initialValues = {
   username: '',
   password: '',
+  passwordConfirmation: '',
 };
 
 const validationSchema = yup.object().shape({
@@ -61,9 +62,13 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required'),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], "Passwords don't match")
+    .required("Password confirmation is required")
 });
 
-const SignInForm = ({ onSubmit }) => {
+const SignUpForm = ({ onSubmit }) => {
   return(
     <View style={styles.container}>
       <View>
@@ -72,52 +77,62 @@ const SignInForm = ({ onSubmit }) => {
       <View>
         <FormikTextInput secureTextEntry="true" name="password" placeholder="password" />
       </View>
+      <View>
+        <FormikTextInput secureTextEntry="true" name="passwordConfirmation" placeholder="password" />
+      </View>
       <Pressable style={styles.button} onPress={onSubmit}>
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
     </View>
   );
 }
-export const SignInContainer = ({onSubmit}) => {
+export const SignUpContainer = ({onSubmit}) => {
   return (
     <Formik 
     initialValues={initialValues} 
     validationSchema={validationSchema}
     onSubmit={onSubmit}
   >
-    {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+    {({ handleSubmit }) => <SignUpForm onSubmit={handleSubmit} />}
   </Formik>
   );
 }
 
-const SignIn = () => {
+const SignUp = () => {
 
+  const [createUser] = useCreateUser();
   const [signIn] = useSignIn();
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
-    console.log(`attempting signin with username ${username} and password ${password}`);
+    console.log(`attempting to create user with username ${username} and password ${password}`)
+
+    let data = undefined;
 
     try {
-      await signIn({ username, password });
-      // console.log(data);
+      data = await createUser({ username, password });
     } catch (e) {
       console.log(e);
+    }
+
+    if (data) {
+      console.log(`successfully created user ${username}`);
+      try {
+        const token = await signIn({ username, password });
+        if (token) {
+          navigate("/");
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
     navigate("/");
   };
 
   return (
-    <SignInContainer onSubmit={onSubmit} />
-  // <Formik 
-  //   initialValues={initialValues} 
-  //   validationSchema={validationSchema}
-  //   onSubmit={onSubmit}
-  // >
-  //   {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-  // </Formik>
+    <SignUpContainer onSubmit={onSubmit} />
   );
 };
 
-export default SignIn;
+export default SignUp;
