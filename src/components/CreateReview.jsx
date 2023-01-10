@@ -87,13 +87,6 @@ const CreateReview = () => {
 
   const onSubmit = async (values) => {
     const { ownerName, repositoryName, rating, review } = values;
-    // const repositoryNodes = repositories
-    // ? repositories.edges.map((edge) => edge.node)
-    // : [];
-    // const id = repositoryNodes
-    //   .filter(n => n.fullName === repositoryName)
-    //   .map(n => n.id)[0];
-    // console.log("id of repository to review:", id)
     console.log(`attempting review repository ${repositoryName}`);
 
     try {
@@ -102,7 +95,6 @@ const CreateReview = () => {
       if (data) {
         navigate(`/${data.createReview.repositoryId}`);
       }
-      // console.log(data);
     } catch (e) {
       console.log(e);
     }

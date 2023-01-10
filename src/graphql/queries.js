@@ -25,13 +25,6 @@ export const GET_REPOSITORIES = gql`
     }
   }`;
 
-export const ME = gql`{
-  me {
-    id
-    username
-  }
-}`;
-
 export const GET_CURRENT_USER = gql`
   query getCurrentUser($includeReviews: Boolean = false) {
     me {
@@ -47,6 +40,9 @@ export const GET_CURRENT_USER = gql`
             user {
               id
               username
+            }
+            repository {
+              url
             }
           }
           cursor

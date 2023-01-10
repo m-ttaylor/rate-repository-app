@@ -8,7 +8,6 @@ import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';
 import SignUp from './SignUp';
 import UserReviews from './UserReviews';
-// import BodyMassIndexCalculator from './BmiForm';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,20 +16,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 });
-
-// const getBodyMassIndex = (mass, height) => {
-//   return Math.round(mass / Math.pow(height, 2));
-// };
-
-// const onSubmit = values => {
-//   const mass = parseFloat(values.mass);
-//   const height = parseFloat(values.height);
-
-//   if (!isNaN(mass) && !isNaN(height) && height !== 0) {
-//     console.log(`Your body mass index is: ${getBodyMassIndex(mass, height)}`);
-//   }
-// };
-
 
 const Main = () => {
   return (

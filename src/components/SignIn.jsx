@@ -110,13 +110,6 @@ const SignIn = () => {
 
   return (
     <SignInContainer onSubmit={onSubmit} />
-  // <Formik 
-  //   initialValues={initialValues} 
-  //   validationSchema={validationSchema}
-  //   onSubmit={onSubmit}
-  // >
-  //   {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-  // </Formik>
   );
 };
 
