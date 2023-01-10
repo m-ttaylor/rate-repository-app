@@ -32,6 +32,35 @@ export const ME = gql`{
   }
 }`;
 
+export const GET_CURRENT_USER = gql`
+  query getCurrentUser($includeReviews: Boolean = false) {
+    me {
+      id
+      username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
 export const GET_REPOSITORY = gql`
   query Repository($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {

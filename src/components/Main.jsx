@@ -7,6 +7,7 @@ import SignIn from './SignIn';
 import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';
 import SignUp from './SignUp';
+import UserReviews from './UserReviews';
 // import BodyMassIndexCalculator from './BmiForm';
 
 const styles = StyleSheet.create({
@@ -41,6 +42,7 @@ const Main = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path=":id" element={<SingleRepository />} />
         <Route path="createReview" element={<CreateReview />} exact />
+        <Route path="userreviews" element={<UserReviews />}  exact />
         <Route path="signup" element={<SignUp />} exact />
       </Routes>
     </View>

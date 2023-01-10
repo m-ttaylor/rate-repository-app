@@ -5,7 +5,7 @@ import theme from '../theme';
 import { Link } from 'react-router-native';
 
 import { useApolloClient, useQuery } from '@apollo/client';
-import { ME } from '../graphql/queries';
+import { GET_CURRENT_USER } from '../graphql/queries';
 import useAuthStorage from '../hooks/useAuthStorage';
 
 const styles = StyleSheet.create({
@@ -44,7 +44,8 @@ const AppBar = () => {
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
 
-  const {data} = useQuery(ME, { fetchPolicy: 'cache-and-network'});
+  const { data } = useQuery(GET_CURRENT_USER, { fetchPolicy: 'cache-and-network' });
+  console.log("login data:", data);
   if (data?.me) {
     signedIn = data.me !== null ? data.me.id : false;
   }
@@ -67,6 +68,7 @@ const AppBar = () => {
           <>
             <AppBarTab title="Sign Out" link="/" onPress={signOut} />
             <AppBarTab title="Create Review" link="createreview" />
+            <AppBarTab title="My Reviews" link="userreviews" />
           </> :
           <>
             <AppBarTab title="Sign In" link="signin" /> 
