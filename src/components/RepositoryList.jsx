@@ -52,7 +52,7 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { repositories } = this.props;
+    const { repositories, onEndReach } = this.props;
     const repositoryNodes = repositories
       ? repositories.edges.map((edge) => edge.node)
       : [];
@@ -62,29 +62,14 @@ export class RepositoryListContainer extends React.Component {
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         ListHeaderComponent={this.renderHeader}
-        // other props
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
 }
-
-// export const RepositoryListContainer = ({ repositories }) => {
-//   const repositoryNodes = repositories
-//     ? repositories.edges.map((edge) => edge.node)
-//     : [];
-
-//   return (
-//     <FlatList
-//       data={repositoryNodes}
-//       ItemSeparatorComponent={ItemSeparator}
-//       // other props
-//       renderItem={renderItem}
-//       keyExtractor={item => item.id}
-//     />
-//   );
-// };
 
 const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState("CREATED_AT");
@@ -92,12 +77,13 @@ const RepositoryList = () => {
   const [selectedSort, setSelectedSort] = useState("latest");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
-  // const [getRepositories] = useRepositories();
 
-  // const { repositories } = getRepositories({ orderBy, orderDirection });
-  const { repositories } = useRepositories({ orderBy, orderDirection, searchKeyword: debouncedSearchTerm});
-
-  // let sortMethod = "latest"; // "highest rated" | "lowest rated"
+  const { repositories, fetchMore } = useRepositories({
+    first: 8,
+    orderBy,
+    orderDirection,
+    searchKeyword: debouncedSearchTerm
+  });
 
   const setSort = (itemValue) => {
     setSelectedSort(itemValue);
@@ -118,13 +104,19 @@ const RepositoryList = () => {
     }
   }
 
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  };
+
   return <>
     <RepositoryListContainer
       repositories={repositories}
       selectedSort={selectedSort}
       setSort={setSort}
       searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm} />
+      setSearchTerm={setSearchTerm}
+      onEndReach={onEndReach}/>
   </>;
 };
 
